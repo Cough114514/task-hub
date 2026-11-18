@@ -2,22 +2,38 @@ name: Deploy TaskHub
 
 on:
   push:
-    branches: [ master ] # 监听 master 分支的推送
+    branches: [master] # 监听 master 分支推送触发部署
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout &#x1f6ce;&#xfe0f;
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install and Build &#x1f527;
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install and Build
         run: |
-          npm install
+          npm ci
           npm run build
 
-      - name: Deploy &#x1f680;
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: / # 打包产物目录
-          branch: master # 部署到这个分支
+          folder: dist          # Vite 构建产物目录
+          branch: gh-pages       # 部署到 gh-pages 分支
+          clean: true
