@@ -7,11 +7,6 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(), // 激活 Tailwind v4 引擎
-    viteCompression({
-      threshold: 10240, // 超过 10kb 的文件才压缩
-      algorithm: 'gzip',
-      ext: '.gz'
-    })
   ],
   resolve: {
     alias: {
