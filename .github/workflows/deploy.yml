@@ -19,5 +19,5 @@ jobs:
       - name: Deploy &#x1f680;
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # 打包产物目录
-          branch: gh-pages # 部署到这个分支
+          folder: / # 打包产物目录
+          branch: master # 部署到这个分支
